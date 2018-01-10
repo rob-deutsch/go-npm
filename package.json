@@ -1,6 +1,6 @@
 {
   "name": "go-npm-private",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Distribute and install Go binaries via NPM (including private Github repos)",
   "main": "index.js",
   "bin": {
