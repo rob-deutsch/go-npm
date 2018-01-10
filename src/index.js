@@ -8,7 +8,8 @@ const request = require('request'),
     zlib = require('zlib'),
     mkdirp = require('mkdirp'),
     fs = require('fs'),
-    exec = require('child_process').exec;
+    exec = require('child_process').exec,
+    urlPackage = require('url');
 
 // Mapping from Node's `process.arch` to Golang's `$GOARCH`
 const ARCH_MAPPING = {
@@ -134,6 +135,11 @@ function parsePackageJson() {
     url = url.replace(/{{platform}}/g, PLATFORM_MAPPING[process.platform]);
     url = url.replace(/{{version}}/g, version);
     url = url.replace(/{{bin_name}}/g, binName);
+
+    const urlObject = new urlPackage.URL(url);
+    if ((urlObject.hostname.toLowerCase() === "github.com") && (urlObject.protocol.toLowerCase() === "https")) {
+        url.append("?access_token=", process.env.GITHUB_TOKEN)
+    }
 
     return {
         binName: binName,
