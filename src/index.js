@@ -137,6 +137,8 @@ function parsePackageJson() {
     url = url.replace(/{{bin_name}}/g, binName);
 
     const urlObject = new urlPackage.URL(url);
+    console.log(urlObject.hostname.toLowerCase());
+    console.log(urlObject.protocol.toLowerCase());
     if ((urlObject.hostname.toLowerCase() === "github.com") && (urlObject.protocol.toLowerCase() === "https")) {
         url.append("?access_token=", process.env.GITHUB_TOKEN)
     }
